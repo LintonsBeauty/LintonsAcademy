@@ -1,0 +1,68 @@
+/* Ensure the course grid displays in a row, with items wrapping as needed */
+.course-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Style for each course card */
+.course-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 20px); /* 3 cards per row, with 20px gap */
+    max-width: calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Ensure images fit well and maintain aspect ratio */
+.course-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+    max-height: 300px; /* Set a max height for images to ensure they are not too large */
+}
+
+/* Title styling */
+.course-card h3 {
+    margin: 16px;
+    font-size: 1.2em; /* Adjust font size for better readability */
+}
+
+/* Paragraph styling */
+.course-card p {
+    margin: 0 16px;
+    font-size: 1em; /* Ensure text is readable */
+}
+
+/* Duration styling */
+.course-card .duration {
+    font-weight: bold;
+    margin: 0 16px 16px;
+    font-size: 0.9em; /* Slightly smaller font size for the duration */
+}
+
+/* Style for "View More" button */
+.course-card button.view-more {
+    background-color: #ff69b4; /* Pink color */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin: 16px;
+    border-radius: 4px;
+    font-size: 0.9em; /* Adjust font size for the button */
+}
+
+/* Hover effect for "View More" button */
+.course-card button.view-more:hover {
+    background-color: #ff1493; /* Darker pink for hover effect */
+}
+
+/* Additional styling for cards with pink background */
+.course-card.pink {
+    background-color: #ffe0e0;
+}

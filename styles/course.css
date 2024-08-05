@@ -1,0 +1,73 @@
+.Our-Programs {
+    background-color: #FFD1DC; /* Light pink background */
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.Our-Programs h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.program-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.program-box {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease;
+}
+
+.program-box:hover {
+    transform: translateY(-5px);
+}
+
+.program-box img {
+    width: 90%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.program-box h3 {
+    font-size: 1.2em;
+    margin: 15px 0 5px;
+    padding: 0 15px;
+}
+
+.program-box .small-logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.program-box p {
+    font-size: 0.9em;
+    color: #666;
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+
+.view-more {
+    background-color: #FF69B4; /* Hot pink */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.view-more:hover {
+    background-color: #FF1493; /* Deeper pink on hover */
+}
