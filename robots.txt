@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /private/
 Allow: /
 
+Sitemap: https://lintonsacademy.com/sitemap.xml
