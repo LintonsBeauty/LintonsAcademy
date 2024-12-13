@@ -1,0 +1,39 @@
+{
+  "routes": {
+    "root": {
+      "path": "",
+      "id": "root",
+      "file": "root.tsx"
+    },
+    "pages/index": {
+      "id": "pages/index",
+      "parentId": "root",
+      "file": "pages/index.tsx",
+      "index": true
+    },
+    "pages/hair-school": {
+      "id": "pages/hair-school",
+      "parentId": "root",
+      "file": "pages/hair-school.tsx",
+      "path": "hair-school"
+    },
+    "pages/beauty-school": {
+      "id": "pages/beauty-school",
+      "parentId": "root",
+      "file": "pages/beauty-school.tsx",
+      "path": "beauty-school"
+    },
+    "pages/contact-us": {
+      "id": "pages/contact-us",
+      "parentId": "root",
+      "file": "pages/contact-us.tsx",
+      "path": "contact-us"
+    },
+    "pages/about-us": {
+      "id": "pages/about-us",
+      "parentId": "root",
+      "file": "pages/about-us.tsx",
+      "path": "about-us"
+    }
+  }
+}
