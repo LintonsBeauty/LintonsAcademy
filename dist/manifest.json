@@ -34,6 +34,12 @@
       "parentId": "root",
       "file": "pages/about-us.tsx",
       "path": "about-us"
+    },
+    "pages/careers": {
+      "id": "pages/careers",
+      "parentId": "root",
+      "file": "pages/careers.tsx",
+      "path": "careers"
     }
   }
 }

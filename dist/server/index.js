@@ -5,17 +5,18 @@ import { ServerRouter, useParams, useLoaderData, useActionData, useMatches, useL
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import * as React from "react";
-import { createElement, useEffect } from "react";
+import { createElement, useEffect, useRef, useState, useMemo } from "react";
 import ReactGA from "react-ga4";
 import { FaInstagram, FaTiktok, FaXTwitter, FaFacebookF } from "react-icons/fa6";
 import { join, map } from "lodash-es";
-import { FiChevronDown, FiMenu, FiX, FiTarget, FiEye } from "react-icons/fi";
+import { FiChevronDown, FiMenu, FiX, FiTarget, FiEye, FiSearch } from "react-icons/fi";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
+import Fuse from "fuse.js";
 const ABORT_DELAY = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, reactRouterContext, loadContext) {
   return isbot(request.headers.get("user-agent")) ? handleBotRequest(
@@ -126,7 +127,7 @@ function withComponentProps(Component) {
   };
 }
 const faviconPNG = "/assets/favicon-H1OfEtK8.ico";
-const styles = "/assets/index-CqQFYzHR.css";
+const styles = "/assets/index-BmEofMVh.css";
 const links = () => {
   return [{
     rel: "stylesheet",
@@ -387,6 +388,15 @@ const Menu = ({
             ] }) }),
             /* @__PURE__ */ jsxs("div", { className: "flex h-full flex-col justify-center space-y-10 pb-6 text-right text-xl uppercase md:pb-12", children: [
               /* @__PURE__ */ jsx(NavLink, { className: "block [&.active]:underline", to: "/", children: "Home" }),
+              /* @__PURE__ */ jsx(NavLink, { className: "block [&.active]:underline", to: "/about-us", children: "About Us" }),
+              /* @__PURE__ */ jsx(
+                NavLink,
+                {
+                  className: "block [&.active]:underline",
+                  to: "/contact-us",
+                  children: "Contact Us"
+                }
+              ),
               /* @__PURE__ */ jsx(
                 NavLink,
                 {
@@ -403,15 +413,7 @@ const Menu = ({
                   children: "Hair School"
                 }
               ),
-              /* @__PURE__ */ jsx(NavLink, { className: "block [&.active]:underline", to: "/about-us", children: "About Us" }),
-              /* @__PURE__ */ jsx(
-                NavLink,
-                {
-                  className: "block [&.active]:underline",
-                  to: "/contact-us",
-                  children: "Contact Us"
-                }
-              ),
+              /* @__PURE__ */ jsx(NavLink, { className: "block [&.active]:underline", to: "/careers", children: "Careers" }),
               /* @__PURE__ */ jsx(
                 "a",
                 {
@@ -1349,7 +1351,175 @@ const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   default: aboutUs
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-BuAN4JNh.js", "imports": ["/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/index-C61taIVb.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-CNT-_j8p.js", "imports": ["/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/index-C61taIVb.js", "/assets/with-props-BGqgUz1f.js"], "css": [] }, "pages/index": { "id": "pages/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/index-CMEd8E1l.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/footer-CJRxYHXz.js", "/assets/menu-cX-Na9Sw.js", "/assets/index-j7NL-zZx.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/hair-school": { "id": "pages/hair-school", "parentId": "root", "path": "hair-school", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/hair-school-BX2t32hC.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/button-DpyCts-h.js", "/assets/menu-cX-Na9Sw.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/beauty-school": { "id": "pages/beauty-school", "parentId": "root", "path": "beauty-school", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/beauty-school-ClJTBVJI.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/button-DpyCts-h.js", "/assets/menu-cX-Na9Sw.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/contact-us": { "id": "pages/contact-us", "parentId": "root", "path": "contact-us", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/contact-us-Beu8mzD7.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/index-j7NL-zZx.js", "/assets/menu-cX-Na9Sw.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/about-us": { "id": "pages/about-us", "parentId": "root", "path": "about-us", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/about-us-CD2v313D.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/menu-cX-Na9Sw.js", "/assets/footer-CJRxYHXz.js", "/assets/index-C61taIVb.js", "/assets/index-j7NL-zZx.js"], "css": [] } }, "url": "/assets/manifest-8d162050.js", "version": "8d162050" };
+const Input = React.forwardRef(
+  ({ className, type, ...props }, ref) => {
+    return /* @__PURE__ */ jsx(
+      "input",
+      {
+        type,
+        className: cn(
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          className
+        ),
+        ref,
+        ...props
+      }
+    );
+  }
+);
+Input.displayName = "Input";
+const jobs = [
+  {
+    title: "Braider - Karim Salon and Spa",
+    location: "Hurlingam Plaza, Nairobi, Kenya",
+    type: "Full-time",
+    description: `✨ We’re Hiring Braiders! ✨
+
+Join our team of experts and passionate stylists catering to natural hair!
+
+Requirements:
+● Skilled in braiding (cornrows, box braids, twists, etc.)
+● Reliable and professional
+● Passionate about creating stunning styles
+● Team-oriented with great customer service
+
+Perks:
+● Supportive, creative work environment
+● Opportunities to grow your skills
+
+To Apply:
+● Send in your CV and Portfolio (images of your work)
+
+📧 Apply now 📧
+karimsalonandspa@gmail.com`,
+    link: ""
+  },
+  {
+    title: "Nail Technician - Karim Salon and Spa",
+    location: "Hurlingam Plaza, Nairobi, Kenya",
+    type: "Full-time",
+    description: `💅 We’re Hiring Nail Techs! 💅
+
+Be part of our beautiful salon experience!
+
+Requirements:
+● Proficient in manicures, pedicures, and nail art
+● Detail-oriented and creative
+● Reliable, professional, and friendly
+● Passionate about delivering exceptional service
+
+Perks:
+● Inspiring, supportive work environment
+● Room to grow your skills and creativity
+
+To Apply:
+● Send in your CV and Portfolio (images of your work)
+
+📧 Apply now 📧
+karimsalonandspa@gmail.com`,
+    link: ""
+  },
+  {
+    title: "Salon Manager - Karim Salon and Spa",
+    location: "Hurlingam Plaza, Nairobi, Kenya",
+    type: "Full-time",
+    shortDescription: "",
+    description: `🌟 We’re Hiring a Salon Manager! 🌟
+
+Lead Karim Salon catering to natural hair and beauty!
+
+Requirements:
+● Proven experience in salon management or similar role
+● Strong leadership and organizational skills
+● Passionate about team building and customer service
+● Ability to manage scheduling, inventory, and operations
+
+Perks:
+● Be part of an exciting new salon launch
+● Collaborative and empowering work environment
+● Opportunities for professional growth
+
+To Apply:
+● Send in your CV and a recommendation letter
+
+📧 Apply now 📧
+karimsalonandspa@gmail.com`,
+    link: ""
+  }
+];
+const jobFuse = new Fuse(jobs, {
+  keys: ["title", "location", "type"],
+  threshold: 0.4,
+  includeScore: true
+});
+function JobList() {
+  const inputRef = useRef(null);
+  const [search, setSearch] = useState("");
+  const filteredJobs = useMemo(
+    () => search ? jobFuse.search(search).map((result) => result.item) : jobs,
+    [search]
+  );
+  return /* @__PURE__ */ jsxs("div", { className: "h-full min-h-screen w-full max-w-screen-lg items-center p-8 pt-40 2xl:max-w-screen-xl", children: [
+    /* @__PURE__ */ jsxs("div", { className: "relative mb-8", children: [
+      /* @__PURE__ */ jsx(
+        Input,
+        {
+          className: "h-14 rounded-xl pl-14 pr-28 md:text-lg",
+          placeholder: "Job title, keywords or company",
+          onChange: (e) => setSearch(e.target.value),
+          ref: inputRef
+        }
+      ),
+      /* @__PURE__ */ jsx(FiSearch, { className: "absolute left-4 top-4 size-6 text-black" }),
+      /* @__PURE__ */ jsx(
+        Button,
+        {
+          variant: "secondary",
+          className: "absolute right-4 top-2.5 h-9 bg-black text-white hover:bg-black/80",
+          onClick: () => {
+            var _a;
+            return search || ((_a = inputRef.current) == null ? void 0 : _a.focus());
+          },
+          children: "Search"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 items-start justify-center gap-6", children: map(filteredJobs, (job) => /* @__PURE__ */ jsxs(Dialog, { children: [
+      /* @__PURE__ */ jsx(DialogTrigger, { className: "rounded-xl", children: /* @__PURE__ */ jsxs(Card, { className: "h-64 overflow-hidden rounded-xl border-black p-6 text-left", children: [
+        /* @__PURE__ */ jsx(CardTitle, { className: "mb-2 line-clamp-1 font-sans font-normal leading-tight opacity-70", children: job.title }),
+        /* @__PURE__ */ jsxs(CardContent, { className: "shrink overflow-hidden p-0", children: [
+          /* @__PURE__ */ jsx("div", { className: "leading-tight", children: job.location }),
+          /* @__PURE__ */ jsx("div", { className: "leading-tight", children: job.type }),
+          /* @__PURE__ */ jsx(CardDescription, { className: "line-clamp-5 whitespace-pre-wrap pt-4", children: job.description })
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsxs(DialogContent, { className: "sm:rounded-xl", children: [
+        /* @__PURE__ */ jsxs(DialogHeader, { className: "mt-2 space-y-0", children: [
+          /* @__PURE__ */ jsx(DialogTitle, { className: "mb-2 font-sans text-2xl font-normal leading-tight opacity-70", children: job.title }),
+          /* @__PURE__ */ jsx("div", { className: "leading-tight", children: job.location }),
+          /* @__PURE__ */ jsx("div", { className: "leading-tight", children: job.type })
+        ] }),
+        /* @__PURE__ */ jsx(DialogDescription, { className: "whitespace-pre-wrap text-base", children: job.description })
+      ] })
+    ] })) })
+  ] });
+}
+const Careers = () => {
+  return /* @__PURE__ */ jsx(Fragment, {
+    children: /* @__PURE__ */ jsxs("div", {
+      className: "relative flex min-h-screen flex-col items-center",
+      children: [/* @__PURE__ */ jsx(Menu, {
+        className: "stroke-black"
+      }), /* @__PURE__ */ jsx(JobList, {}), /* @__PURE__ */ jsx(Footer, {})]
+    })
+  });
+};
+const careers = withComponentProps(Careers);
+const route6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: careers
+}, Symbol.toStringTag, { value: "Module" }));
+const serverManifest = { "entry": { "module": "/assets/entry.client-BuAN4JNh.js", "imports": ["/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/index-C61taIVb.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/root-CYiz178i.js", "imports": ["/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/index-C61taIVb.js", "/assets/with-props-BGqgUz1f.js"], "css": [] }, "pages/index": { "id": "pages/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/index-wemOK5nw.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/footer-53-rCgd2.js", "/assets/menu-DjXkWOgy.js", "/assets/index-BrljsPW0.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/hair-school": { "id": "pages/hair-school", "parentId": "root", "path": "hair-school", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/hair-school-CRTVDybq.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/button-DefJ-qzj.js", "/assets/menu-DjXkWOgy.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/beauty-school": { "id": "pages/beauty-school", "parentId": "root", "path": "beauty-school", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/beauty-school-QCBhMh85.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/button-DefJ-qzj.js", "/assets/menu-DjXkWOgy.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/contact-us": { "id": "pages/contact-us", "parentId": "root", "path": "contact-us", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/contact-us-BTxZSJK1.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/index-BrljsPW0.js", "/assets/menu-DjXkWOgy.js", "/assets/index-C61taIVb.js"], "css": [] }, "pages/about-us": { "id": "pages/about-us", "parentId": "root", "path": "about-us", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/about-us-LlBdvrIX.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/menu-DjXkWOgy.js", "/assets/footer-53-rCgd2.js", "/assets/index-C61taIVb.js", "/assets/index-BrljsPW0.js"], "css": [] }, "pages/careers": { "id": "pages/careers", "parentId": "root", "path": "careers", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/careers-DYKA0uEw.js", "imports": ["/assets/with-props-BGqgUz1f.js", "/assets/chunk-D52XG6IA-6zk5tNpU.js", "/assets/button-DefJ-qzj.js", "/assets/menu-DjXkWOgy.js", "/assets/footer-53-rCgd2.js", "/assets/index-C61taIVb.js", "/assets/index-BrljsPW0.js"], "css": [] } }, "url": "/assets/manifest-5c99a38d.js", "version": "5c99a38d" };
 const assetsBuildDirectory = "dist\\client";
 const basename = "/";
 const future = { "unstable_optimizeDeps": false };
@@ -1404,6 +1574,14 @@ const routes = {
     index: void 0,
     caseSensitive: void 0,
     module: route5
+  },
+  "pages/careers": {
+    id: "pages/careers",
+    parentId: "root",
+    path: "careers",
+    index: void 0,
+    caseSensitive: void 0,
+    module: route6
   }
 };
 export {
